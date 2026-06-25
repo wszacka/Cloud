@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springbooks-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+        - name: springbooks
+          image: markvellaum/springbooks:v0.0.1
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: PGHOST
+              value: "books-pg-cluster-rw"
+            - name: PGPORT
+              value: "5432"
+            - name: PGDB
+              value: "books"
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: cnpg-credentials
+                  key: username
+            - name: PGPASS
+              valueFrom:
+                secretKeyRef:
+                  name: cnpg-credentials
+                  key: password

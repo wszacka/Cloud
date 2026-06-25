@@ -1,0 +1,26 @@
+services:
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: books
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: pjDHgeTY/HTL1W2SWEpbfRMq
+
+    ports:
+      - "5432:5432"
+
+  books-app:
+    image: markvellaum/springbooks:v0.0.1
+    container_name: springbooks-app
+    depends_on:
+      - postgres-db
+    environment:
+      PGHOST: postgres-db
+      PGPORT: 5432
+      PGDB: books
+      PGUSER: myuser
+      PGPASS: pjDHgeTY/HTL1W2SWEpbfRMq
+
+    ports:
+      - "8080:8080"

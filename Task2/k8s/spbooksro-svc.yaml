@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: springbooksro-svc
+spec:
+  selector:
+    tier: frontendro
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8080

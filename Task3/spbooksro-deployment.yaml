@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springbooksro-dep
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      tier: frontendro
+  template:
+    metadata:
+      labels:
+        tier: frontendro
+    spec:
+      containers:
+        - name: springbooks
+          image: markvellaum/springbooksro:v0.0.1
+          env:
+            - name: PGHOST
+              value: "books-pg-cluster-ro"
+            - name: PGPORT
+              value: "5432"
+            - name: PGDB
+              value: "books"
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: cnpg-credentials
+                  key: username
+            - name: PGPASS
+              valueFrom:
+                secretKeyRef:
+                  name: cnpg-credentials
+                  key: password

@@ -1,0 +1,43 @@
+kubectl get pods
+NAME                                   READY   STATUS    RESTARTS   AGE
+mypgsql-postgresql-0                   1/1     Running   0          4m1s
+springbooks-dep-7fc545b9d7-ngpzf       1/1     Running   0          2m50s
+springbooksro-dep-6bb78d9665-647ck     1/1     Running   0          2m37s
+springbooksro-dep-6bb78d9665-j7fc4     1/1     Running   0          2m48s
+springbooksro-dep-6bb78d9665-s5qb6     1/1     Running   0          2m45s
+
+kubectl get svc
+NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+kubernetes              ClusterIP   10.96.0.1        <none>        443/TCP    13d
+mypgsql-postgresql      ClusterIP   10.101.191.176   <none>        5432/TCP   5m10s
+mypgsql-postgresql-hl   ClusterIP   None             <none>        5432/TCP   5m10s
+springbooks-svc         ClusterIP   10.103.43.174    <none>        80/TCP     32m
+springbooksro-svc       ClusterIP   10.108.191.106   <none>        80/TCP     32m
+
+kubectl get deployments
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+springbooks-dep       1/1     1            1           26m
+springbooksro-dep     3/3     3            3           26m
+
+
+
+self-healing
+
+kubectl get pods
+NAME                                   READY   STATUS    RESTARTS   AGE
+mypgsql-postgresql-0                   1/1     Running   0          5m48s
+springbooks-dep-7fc545b9d7-ngpzf       1/1     Running   0          4m37s
+springbooksro-dep-6bb78d9665-647ck     1/1     Running   0          4m24s
+springbooksro-dep-6bb78d9665-j7fc4     1/1     Running   0          4m35s
+springbooksro-dep-6bb78d9665-s5qb6     1/1     Running   0          4m32s
+
+kubectl delete pod -l tier=frontend
+pod "springbooks-dep-7fc545b9d7-ngpzf" deleted from default namespace
+
+kubectl get pods
+NAME                                   READY   STATUS    RESTARTS   AGE
+mypgsql-postgresql-0                   1/1     Running   0          6m34s
+springbooks-dep-7fc545b9d7-d9nwd       1/1     Running   0          33s
+springbooksro-dep-6bb78d9665-647ck     1/1     Running   0          5m10s
+springbooksro-dep-6bb78d9665-j7fc4     1/1     Running   0          5m21s
+springbooksro-dep-6bb78d9665-s5qb6     1/1     Running   0          5m18s

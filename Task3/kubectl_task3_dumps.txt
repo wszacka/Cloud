@@ -1,0 +1,30 @@
+kubectl get cluster
+NAME               AGE    INSTANCES   READY   STATUS                     PRIMARY
+books-pg-cluster   139m   2           2       Cluster in healthy state   books-pg-cluster-1
+
+kubectl get pods        
+NAME                                   READY   STATUS    RESTARTS   AGE
+books-pg-cluster-1                     1/1     Running   0          139m
+books-pg-cluster-2                     1/1     Running   0          139m
+cnpg-cloudnative-pg-6bf9dd89fb-9z9tl   1/1     Running   0          3h2m
+springbooks-dep-7d956579df-vnh7z       1/1     Running   0          3m49s
+springbooksro-dep-68d997b7c9-87mpr     1/1     Running   0          3m49s
+springbooksro-dep-68d997b7c9-dwbsv     1/1     Running   0          3m47s
+springbooksro-dep-68d997b7c9-scfrw     1/1     Running   0          3m49s
+springbooksro-dep-68d997b7c9-w64w8     1/1     Running   0          3m44s
+
+kubectl get svc
+NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+books-pg-cluster-r     ClusterIP   10.109.207.10    <none>        5432/TCP   140m
+books-pg-cluster-ro    ClusterIP   10.110.115.65    <none>        5432/TCP   140m
+books-pg-cluster-rw    ClusterIP   10.103.114.239   <none>        5432/TCP   140m
+cnpg-webhook-service   ClusterIP   10.102.249.190   <none>        443/TCP    3h2m
+kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP    13d
+springbooks-svc        ClusterIP   10.103.43.174    <none>        80/TCP     43m
+springbooksro-svc      ClusterIP   10.108.191.106   <none>        80/TCP     43m
+
+kubectl get pvc
+NAME                        STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+books-pg-cluster-1          Bound    pvc-fde5ab73-d456-4bb0-9ce8-900f97ebb448   1Gi        RWO            standard       <unset>                 140m
+books-pg-cluster-2          Bound    pvc-a2d6ff04-0483-4b4e-95db-86f30af429fa   1Gi        RWO            standard       <unset>                 140m
+data-mypgsql-postgresql-0   Bound    pvc-43da2a73-1e6f-4974-8317-a83d06acfc86   8Gi        RWO            standard       <unset>                 16m
